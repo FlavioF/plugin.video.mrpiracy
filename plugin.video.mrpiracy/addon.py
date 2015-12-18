@@ -172,9 +172,9 @@ def getList(url, pagina):
         for imagem, nome1, link, nome3, genero, ano, nomeOriginal, realizador, elenco, plot in match:
             try:
                 
-                infoLabels = {'Title': nomeOriginal.encode('utf8'), 'Year': ano, 'Genre': genero.encode('utf8'), 'Plot': plot }
+                infoLabels = {'Title': nomeOriginal.encode('utf8'), 'Year': ano, 'Genre': genero.encode('utf8'), 'Plot': plot.encode('utf8') }
 
-                addVideo(nomeOriginal+' ('+ano+')', __SITE__+link, 3, imagem, 'filme', 0, 0, infoLabels, imagem)
+                addVideo(nomeOriginal.encode('utf8')+' ('+ano.encode('utf8')+')', __SITE__+link, 3, imagem, 'filme', 0, 0, infoLabels, imagem)
             except:
                 pass
     else:
@@ -657,7 +657,9 @@ def player(name,url,iconimage,temporada,episodio,serieNome=''):
     xbmcplugin.setResolvedUrl(handle=int(sys.argv[1]), succeeded=True, listitem=listitem)
     
     mensagemprogresso.update(75, "", u'Boa Sessão!!!', "")
-    print "url: "+url+" idIMDb: "+idIMDb+" pastaData: "+pastaData+"\n temporada: "+str(temporada)+" episodio: "+str(episodio)+" \nnome: "+name+" ano:"+str(ano)+"\nstram: "+stream+" legenda: "+legenda 
+
+    # TODO - fix with enconding probs
+    #print "url: "+url+" idIMDb: "+idIMDb.encode('utf8')+" pastaData: "+pastaData+"\n temporada: "+temporada.encode('utf8')+" episodio: "+episodio.encode('utf8')+" \nnome: "+name+" ano:"+str(ano)+"\nstram: "+stream+" legenda: "+legenda
 
     player = Player.Player(url=url, idFilme=idIMDb, pastaData=pastaData, temporada=temporada, episodio=episodio, nome=name, ano=ano, logo=os.path.join(__ADDON_FOLDER__,'icon.png'), serieNome=serieNome)
     mensagemprogresso.close()
