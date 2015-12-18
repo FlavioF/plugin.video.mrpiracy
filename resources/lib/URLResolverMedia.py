@@ -159,13 +159,18 @@ class Vidzi():
 			for pack in re.finditer('(eval\(function.*?)</script>', sourceCode, re.DOTALL):
 				dataJs = jsunpacker.unpack(pack.group(1)) # Unpacker for Dean Edward's p.a.c.k.e.r | THKS
 				stream = re.search('file\s*:\s*"([^"]+)', dataJs)
-				subtitle = re.compile('tracks:\[\{file:"(.+?)\.srt"').findall(dataJs)[0]
-				subtitle += ".srt"
-				self.subtitle = subtitle
+
+				try:
+					subtitle = re.compile('tracks:\[\{file:"(.+?)\.srt"').findall(dataJs)[0]
+					subtitle += ".srt"
+					self.subtitle = subtitle
+				except:
+					pass
+
 				if stream:
 					return stream.group(1)
 
-		self.messageOk('MrPiracy.xyz', 'Video nao encontrado. Escolha outro servidro')
+		self.messageOk('MrPiracy.xyz', 'Video nao encontrado. Escolha outro servidor')
 
 
 	def getSubtitle(self):
