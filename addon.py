@@ -200,7 +200,7 @@ def getEpisodes(url):
 
     #match = re.compile('<div id="(.+?)" class="item">\s+<div class="thumb(.+?)">\s+<a href="(.+?)">\s+<img style="(.+?)" src="(.+?)" onError="this.onerror=null;this.src=\'(.+?)\';" alt="(.+?)">\s+<div class="thumb-shadow"><\/div>\s+<div class="visto" style="background-size: 110px;"><\/div>\s+<div class="thumb-effect"><\/div>\s+<div class="episode-number">(.+?)<\/div>').findall(codigo_fonte)
     #match = re.compile('<div id="(.+?)" class="item">\s+<div class="thumb(.+?)">\s+<a href="(.+?)">\s+<img style="(.+?)" src="(.+?)" onError="this.onerror=null;this.src=\'(.+?)\';" alt="(.+?)">\s+<div class="thumb-shadow"><\/div>\s+<div class="thumb-effect"><\/div>\s+<div class="episode-number">(.+?)<\/div>').findall(codigo_fonte)
-    match = re.compile('<div id="(.+?)" class="item">\s+<div class="thumb(.+?)?">\s+<a name=\'.+?\' href="(.+?)">\s+<img style="(.+?)" src="(.+?)" onError="this\.onerror=null;this\.src=\'(.+?)\';" alt="(.+?)">\s+<div class="thumb-shadow" alt="(.+?)"><\/div>\s+<div class="thumb-effect" alt="(.+?)"><\/div>\s+<div class="episode-number">(.+?)<\/div>').findall(codigo_fonte)
+    match = re.compile('<div id=".+?" class="item">[\s|\S]+?href="(.+?)"[\s|\S]+?src="(.+?)"[\s|\S]+?this.src='(.+?)'[\s|\S]+?alt="(.+?)"[\s|\S]+?class="episode-number">(.+?)<\/div>').findall(codigo_fonte)
 
     temporadaNumero = re.compile('<div class="season"><a href="(.+?)" class="slctd">(.+?)</a></div>').findall(codigo_fonte)[0][1]
     actors = re.compile('<span class="director-caption">Elenco:<\/span>\s+<span class="director">(.+?)<\/span>').findall(codigo_fonte)[0]
@@ -210,7 +210,7 @@ def getEpisodes(url):
     serieTitulo = re.compile('<span class="original-name">- "(.+?)"<\/span>').findall(codigo_fonte)[0]
 
 
-    for lixo, lixo1, link, lixo2, imagem, imagemExterna, nome, nome1, nome2, episodioNumero in match:
+    for link, imagem, imagemExterna, nome, episodioNumero in match:
         imdb = re.compile('imdb=(.+?)&').findall(link)[0]
         infoLabels = {'Title':nome, 'Actors':actors, 'Plot':plot, 'Season':temporadaNumero, 'Episode':episodioNumero, 'Writer': criador, "Code":imdb }
         
