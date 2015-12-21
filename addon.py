@@ -120,8 +120,7 @@ def parseSource(source, type):
         match = re.compile('<a href="filme.php[\s|\S]+?<img src="(.+?)" alt="(.+?)">[\s|\S]+?href="(.+?)"[\s|\S]+?"movie-name">(.+?)<\/[\s|\S]+?"genre">(.+?)<\/[\s|\S]+?"year">\s+<span>\(<\/span>(.+?)<span>\)<\/span><\/span>[\s|\S]+?"original-name">\s+-\s+"(.+?)"<\/[\s|\S]+?"director">(.+?)<\/[\s|\S]+?class="director">(.+?)<\/[\s|\S]+?"movie-synopsis">(.+?)<\/').findall(source)
 
     elif type == 'series':
-        match = re.compile('<img src="(.+?)" alt="(.+?)">\s+<div class="thumb-effect" title="(.+?)"><\/div>\s+\s+<\/a>\s+<\/div>\s+<\/div>\s+<div class="movie-info">\s+<a href="(.+?)" class="movie-name">(.+?)<\/a>\s+<div class="clear"><\/div>\s+<div class="movie-detailed-info">\s+<div class="detailed-aux" style="height\: 20px\; line-height\: 20px\;">\s+<span class="genre">(.+?)<\/span>\s+<span class="year">\s+<span>\(<\/span>(.+?)<span>\)<\/span><\/span>\s+<span class="original-name">\s+-\s+"(.+?)"<\/span>\s+<\/div>\s+<div class="detailed-aux">\s+<span class="director-caption">Criador:\s+<\/span>\s+<span class="director">(.+?)<\/span>\s+<\/div>\s+<div class="detailed-aux">\s+<span class="director-caption">Elenco:<\/span>\s+<span class="director">(.+?)<\/span>\s+<\/div>\s+<\/div>\s+<div class="clear"><\/div>\s+<br><div class="clear"><\/div>\s+<span id="movie-synopsis" class="movie-synopsis">(.+?)<\/span>').findall(source)
-        match += re.compile('<img src="(.+?)" alt="(.+?)">\s+<div class="thumb-effect" title="(.+?)"><\/div>\s+<div class="portugues"><\/div>\s+<\/a>\s+<\/div>\s+<\/div>\s+<div class="movie-info">\s+<a href="(.+?)" class="movie-name">(.+?)<\/a>\s+<div class="clear"><\/div>\s+<div class="movie-detailed-info">\s+<div class="detailed-aux" style="height\: 20px\; line-height\: 20px\;">\s+<span class="genre">(.+?)<\/span>\s+<span class="year">\s+<span>\(<\/span>(.+?)<span>\)<\/span><\/span>\s+<span class="original-name">\s+-\s+"(.+?)"<\/span>\s+<\/div>\s+<div class="detailed-aux">\s+<span class="director-caption">Criador:\s+<\/span>\s+<span class="director">(.+?)<\/span>\s+<\/div>\s+<div class="detailed-aux">\s+<span class="director-caption">Elenco:<\/span>\s+<span class="director">(.+?)<\/span>\s+<\/div>\s+<\/div>\s+<div class="clear"><\/div>\s+<br><div class="clear"><\/div>\s+<span id="movie-synopsis" class="movie-synopsis">(.+\s+.+)<\/span>').findall(source)
+        match = re.compile('<a href="serie.php[\s|\S]+?<img src="(.+?)" alt="(.+?)">[\s|\S]+?href="(.+?)"[\s|\S]+?"movie-name">(.+?)<\/[\s|\S]+?"genre">(.+?)<\/[\s|\S]+?"year">\s+<span>\(<\/span>(.+?)<span>\)<\/span><\/span>[\s|\S]+?"original-name">\s+-\s+"(.+?)"<\/[\s|\S]+?"director">(.+?)<\/[\s|\S]+?class="director">(.+?)<\/[\s|\S]+?"movie-synopsis">(.+?)<\/').findall(source)
 
     #pprint.pprint(match)
     return match
@@ -161,10 +160,10 @@ def getList(url, pagina):
             except:
                 pass
     else:
-        for imagem, nome1, nome2, link, nome3, genero, ano, nomeOriginal, realizador, elenco, plot in match:
+        for imagem, nome1, link, nome3, genero, ano, nomeOriginal, realizador, elenco, plot in match:
             try:
                 infoLabels = {'Title':nomeOriginal.encode('utf8'), 'Aired':ano, 'Plot': plot}
-                addDir(nomeOriginal+ ' ('+ano+')', __SITE__+link, 4, imagem, pagina, 'serie', infoLabels, imagem)
+                addDir(nomeOriginal.encode('utf8')+ ' ('+ano.encode('utf8')+')', __SITE__+link, 4, imagem, pagina, 'serie', infoLabels, imagem)
             except:
                 pass
 
